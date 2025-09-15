@@ -79,7 +79,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
     // print(widget.id);
 
     const uri =
-        "https://tailpass.com/mycardoctor/api/pdi/mark_completed_pdi_check_point";
+        "https://tailpass.com/mycarsdoctor/api/pdi/mark_completed_pdi_check_point";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -103,7 +103,6 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
       return data['message'];
     }
   }
-  
 
   Future<void> _pickAndCropcamera() async {
     final picker = ImagePicker();
@@ -352,7 +351,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                     ), // Rounded corners
                                   ),
                                   child: Image.network(
-                                    "https://tailpass.com/mycardoctor/${widget.pdilistoflead[i].pdiImageUpload}",
+                                    "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[i].pdiImageUpload}",
                                   ),
                                 )
                               : Text("No image selected"),
@@ -421,7 +420,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                       //                 .toString(),
                       //           );
                       //           // Image.network(
-                      //           //   "https://tailpass.com/mycardoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
+                      //           //   "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
                       //           // );
                       //         } else {
                       //           return Text("");
@@ -592,7 +591,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                       });
 
                                       Response response = await dio.post(
-                                        'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                        'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                         data: formData,
                                         options: Options(
                                           headers: {
@@ -799,7 +798,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                           });
 
                                           Response response = await dio.post(
-                                            'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                            'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                             data: formData,
                                             options: Options(
                                               headers: {
@@ -813,8 +812,10 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                           );
 
                                           if (response.statusCode == 200) {
-                                           String res =
-                                                await MarkedLeadAsPdiComplete("1");
+                                            String res =
+                                                await MarkedLeadAsPdiComplete(
+                                                  "1",
+                                                );
 
                                             print(response.toString());
 
@@ -1242,7 +1243,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                   //                 .toString(),
                   //           );
                   //           // Image.network(
-                  //           //   "https://tailpass.com/mycardoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
+                  //           //   "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
                   //           // );
                   //         } else {
                   //           return Text("");
@@ -1400,7 +1401,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                   });
 
                                   Response response = await dio.post(
-                                    'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                    'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                     data: formData,
                                     options: Options(
                                       headers: {
@@ -1413,8 +1414,9 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                   );
 
                                   if (response.statusCode == 200) {
-                                  String res =
-                                        await MarkedLeadAsPdiComplete("2");
+                                    String res = await MarkedLeadAsPdiComplete(
+                                      "2",
+                                    );
 
                                     print(response.toString());
 
@@ -1570,7 +1572,7 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                   });
 
                                   Response response = await dio.post(
-                                    'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                    'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                     data: formData,
                                     options: Options(
                                       headers: {
@@ -1583,8 +1585,9 @@ class _LeadmainsecondState extends State<Leadmainsecond> {
                                   );
 
                                   if (response.statusCode == 200) {
-                                   String res =
-                                        await MarkedLeadAsPdiComplete("1");
+                                    String res = await MarkedLeadAsPdiComplete(
+                                      "1",
+                                    );
 
                                     print(response.toString());
 

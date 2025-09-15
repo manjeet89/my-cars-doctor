@@ -149,54 +149,51 @@ class _LoginState extends State<Login> {
                           ),
                         );
                       } else {
-                      
-                        String Number = number.text.toString();
-                       
-                        String Password = password.text.toString();
-                       
-                        final uri =
-                            "https://tailpass.com/mycardoctor/api/partnerlogin";
-                       
+                        Map<String, String> headers = {
+                          "Access-Control-Allow-Origin": "*",
+                          'Content-Type': 'application/json',
+                          'Accept': '*/*',
+                        };
                         final responce = await http.post(
                           Uri.parse(
-                            "https://tailpass.com/mycardoctor/api/partnerlogin",
+                            "https://tailpass.com/mycarsdoctor/api/partnerlogin",
                           ),
                           body: {
                             "user_phone_number": number.text.toString(),
                             "user_password": password.text.toString(),
                           },
+                          // headers: headers,
                         );
-                     
+
                         var data = json.decode(responce.body);
                         print(data.toString());
 
                         if (data['code'].toString() == "200") {
-                         
                           SharedPreferences Token =
                               await SharedPreferences.getInstance();
                           await Token.setString("Token", data['user_token']);
-                         
+
                           SharedPreferences Userid =
                               await SharedPreferences.getInstance();
                           await Userid.setString(
                             "Userid",
                             data['data']['user_id'],
                           );
-                          
+
                           SharedPreferences Username =
                               await SharedPreferences.getInstance();
                           await Username.setString(
                             "Username",
                             data['data']['user_full_name'],
                           );
-                         
+
                           SharedPreferences email =
                               await SharedPreferences.getInstance();
                           await email.setString(
                             "email",
                             data['data']['user_email_id'],
                           );
-                        
+
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => Home()),
@@ -258,7 +255,7 @@ class _LoginState extends State<Login> {
     String Number = number.text;
     String Password = password.text;
 
-    const uri = "https://tailpass.com/mycardoctor/api/partnerlogin";
+    const uri = "https://tailpass.com/mycarsdoctor/api/partnerlogin";
 
     final responce = await http.post(
       Uri.parse(uri),

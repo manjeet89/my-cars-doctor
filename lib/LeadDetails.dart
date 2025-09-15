@@ -22,6 +22,7 @@ class _LeaddetailsState extends State<Leaddetails> {
   String token = "";
   bool CallingApi = false;
   String Address = "";
+  bool visible = false;
 
   @override
   void initState() {
@@ -37,16 +38,10 @@ class _LeaddetailsState extends State<Leaddetails> {
 
     setState(() {
       CallingApi = true;
+
+      widget.car.userAddress.toString() == "null" ? visible = false : true;
       Address = widget.car.userAddress.toString() == "null"
-          ? "" +
-                ", " +
-                district +
-                ", " +
-                state +
-                ", " +
-                country +
-                " ," +
-                widget.car.pinCode.toString()
+          ? ""
           : widget.car.userAddress.toString() +
                 ", " +
                 district +
@@ -531,7 +526,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                           InkWell(
                             onTap: () async {
                               var _url = Uri.parse(
-                                "tel:${widget.car.customerPhoneNumber.toString()}",
+                                "tel:${widget.car.userPhoneNumber.toString()}",
                               );
                               if (!await launchUrl(
                                 _url,
@@ -545,7 +540,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(
-                                  widget.car.customerPhoneNumber.toString(),
+                                  widget.car.userPhoneNumber.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 14,
@@ -563,99 +558,102 @@ class _LeaddetailsState extends State<Leaddetails> {
               ],
             ),
 
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        5,
-                        121,
-                        189,
-                      ), // Border color
-                      // width: 2.0, // Border width
-                    ),
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(6),
-                      topRight: Radius.circular(6),
-                    ), // Rounded corners
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      /// ZondIcons' Icon
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          IonIcons.location,
-                          color: Color(0xFF4e73b4),
-                        ),
+            Visibility(
+              visible: visible,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                    width: double.infinity,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(
+                          255,
+                          5,
+                          121,
+                          189,
+                        ), // Border color
+                        // width: 2.0, // Border width
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Customer Location",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ), // Rounded corners
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        /// ZondIcons' Icon
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            IonIcons.location,
+                            color: Color(0xFF4e73b4),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 0),
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(
-                        255,
-                        5,
-                        121,
-                        189,
-                      ), // Border color
-                      // width: 2.0, // Border width
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Customer Location",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(6),
-                      bottomRight: Radius.circular(6),
-                    ), // Rounded corners
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(
-                                  Address,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14,
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 0),
+                    width: double.infinity,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(
+                          255,
+                          5,
+                          121,
+                          189,
+                        ), // Border color
+                        // width: 2.0, // Border width
+                      ),
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(6),
+                        bottomRight: Radius.circular(6),
+                      ), // Rounded corners
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    Address,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

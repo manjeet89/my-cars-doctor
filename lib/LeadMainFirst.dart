@@ -55,7 +55,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
 
     // print(widget.id);
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/check_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/check_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -94,7 +94,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
     // print(widget.id);
 
     const uri =
-        "https://tailpass.com/mycardoctor/api/pdi/mark_completed_pdi_check_point";
+        "https://tailpass.com/mycarsdoctor/api/pdi/mark_completed_pdi_check_point";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -402,7 +402,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                             ), // Rounded corners
                                           ),
                                           child: Image.network(
-                                            "https://tailpass.com/mycardoctor/${widget.pdilistoflead[i].pdiImageUpload}",
+                                            "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[i].pdiImageUpload}",
                                           ),
                                         )
                                       : Text("No image selected"),
@@ -588,7 +588,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
 
                                               Response
                                               response = await dio.post(
-                                                'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                                'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                                 data: formData,
                                                 options: Options(
                                                   headers: {
@@ -815,7 +815,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
 
                                                   Response
                                                   response = await dio.post(
-                                                    'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                                    'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                                     data: formData,
                                                     options: Options(
                                                       headers: {
@@ -1385,7 +1385,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                           });
 
                                           Response response = await dio.post(
-                                            'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                            'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                             data: formData,
                                             options: Options(
                                               headers: {
@@ -1592,7 +1592,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                           });
 
                                           Response response = await dio.post(
-                                            'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                            'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                             data: formData,
                                             options: Options(
                                               headers: {

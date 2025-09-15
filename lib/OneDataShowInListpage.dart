@@ -45,7 +45,7 @@ class _OnedatashowinlistpageState extends State<Onedatashowinlistpage> {
 
     // print(widget.id);
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/check_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/check_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -489,7 +489,7 @@ class _OnedatashowinlistpageState extends State<Onedatashowinlistpage> {
                                         });
 
                                         Response response = await dio.post(
-                                          'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                          'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                           data: formData,
                                           options: Options(
                                             headers: {

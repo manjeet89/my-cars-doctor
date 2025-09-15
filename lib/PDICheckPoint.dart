@@ -36,7 +36,7 @@ class _PdicheckpointState extends State<Pdicheckpoint> {
 
     // print(widget.id);
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/check_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/check_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',

@@ -32,7 +32,7 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/lead_pdi_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/lead_pdi_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -348,7 +348,7 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
                                                     color: Colors.black,
                                                     child: InteractiveViewer(
                                                       child: Image.network(
-                                                        "https://tailpass.com/mycardoctor/${car.pdiImageUpload.toString()}",
+                                                        "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
                                                         fit: BoxFit.contain,
                                                       ),
                                                     ),
@@ -383,7 +383,7 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
                                         topRight: Radius.circular(6),
                                       ),
                                       child: Image.network(
-                                        "https://tailpass.com/mycardoctor/${car.pdiImageUpload.toString()}",
+                                        "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
                                         width: 150,
                                         height: 120,
                                         fit: BoxFit.cover,

@@ -62,7 +62,7 @@ class _SeconddatashowinlistpageState extends State<Seconddatashowinlistpage> {
 
     // print(widget.id);
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/check_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/check_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -401,7 +401,7 @@ class _SeconddatashowinlistpageState extends State<Seconddatashowinlistpage> {
                                       .toString(),
                                 );
                                 // Image.network(
-                                //   "https://tailpass.com/mycardoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
+                                //   "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[pdilistIndex].pdiImageUpload.toString()}",
                                 // );
                               } else {
                                 return Text("");
@@ -571,7 +571,7 @@ class _SeconddatashowinlistpageState extends State<Seconddatashowinlistpage> {
                                       });
 
                                       Response response = await dio.post(
-                                        'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                        'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                         data: formData,
                                         options: Options(
                                           headers: {
@@ -760,7 +760,7 @@ class _SeconddatashowinlistpageState extends State<Seconddatashowinlistpage> {
                                       });
 
                                       Response response = await dio.post(
-                                        'https://tailpass.com/mycardoctor/api/pdi/update_pdi_check_point',
+                                        'https://tailpass.com/mycarsdoctor/api/pdi/update_pdi_check_point',
                                         data: formData,
                                         options: Options(
                                           headers: {

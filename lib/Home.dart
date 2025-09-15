@@ -61,7 +61,7 @@ class _HomeState extends State<Home> with RouteAware {
 
     // print(widget.id);
 
-    const uri = "https://tailpass.com/mycardoctor/api/pdi/new_car_list";
+    const uri = "https://tailpass.com/mycarsdoctor/api/pdi/new_car_list";
 
     Map<String, String> requestHeaders = {
       'Accept': 'application/json',
@@ -354,7 +354,7 @@ class _HomeState extends State<Home> with RouteAware {
                                   InkWell(
                                     onTap: () async {
                                       var _url = Uri.parse(
-                                        "tel:${car.customerPhoneNumber.toString()}",
+                                        "tel:${car.userPhoneNumber.toString()}",
                                       );
                                       if (!await launchUrl(
                                         _url,
@@ -415,7 +415,7 @@ class _HomeState extends State<Home> with RouteAware {
                                   InkWell(
                                     onTap: () async {
                                       var _url = Uri.parse(
-                                        "tel:${dataload[index].customerPhoneNumber.toString()}",
+                                        "tel:${dataload[index].userPhoneNumber.toString()}",
                                       );
                                       if (!await launchUrl(
                                         _url,
@@ -431,7 +431,7 @@ class _HomeState extends State<Home> with RouteAware {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          (dataload[index].customerPhoneNumber
+                                          (dataload[index].userPhoneNumber
                                               .toString()),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w800,
@@ -516,65 +516,67 @@ class _HomeState extends State<Home> with RouteAware {
                                   ),
                                 ],
                               ),
+
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  SizedBox(
-                                    height: 60,
-                                    width: 120,
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 20.0,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                  Colors.orange,
-                                                ),
-                                            // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                                            // textStyle: MaterialStateProperty.all(
-                                            //   TextStyle(fontSize: 30, color: Colors.white),
-                                            // ),
+                                  if (car.leadStatus.toString() != '0')
+                                    SizedBox(
+                                      height: 60,
+                                      width: 120,
+                                      child: Container(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 20.0,
                                           ),
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                    Colors.orange,
+                                                  ),
+                                              // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                                              // textStyle: MaterialStateProperty.all(
+                                              //   TextStyle(fontSize: 30, color: Colors.white),
+                                              // ),
+                                            ),
 
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                'View',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w800,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  'View',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_right_alt,
-                                                size: 15,
-                                                color: Colors.white,
-                                              ),
-                                            ],
+                                                Icon(
+                                                  Icons.arrow_right_alt,
+                                                  size: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Completepidcheckpoint(
+                                                        car: car,
+                                                      ),
+                                                ),
+                                              );
+                                              print('Successfully log in ');
+                                            },
                                           ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Completepidcheckpoint(
-                                                      car: car,
-                                                    ),
-                                              ),
-                                            );
-                                            print('Successfully log in ');
-                                          },
                                         ),
                                       ),
                                     ),
-                                  ),
                                   SizedBox(
                                     height: 60,
                                     width: 130,
