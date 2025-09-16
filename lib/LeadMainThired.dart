@@ -225,7 +225,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                     bottom: 20,
                   ),
                   width: double.infinity,
-                  height: 450,
+                  height: MediaQuery.of(context).size.width * 1.3,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(
@@ -249,7 +249,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 130,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -272,7 +272,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                             ),
                           ),
                           Container(
-                            width: 150,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -296,7 +296,8 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                                     right: 20,
                                     top: 0,
                                   ),
-                                  width: double.infinity,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
                                   // height: 150,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -331,7 +332,8 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                                     right: 20,
                                     top: 0,
                                   ),
-                                  width: double.infinity,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
                                   // height: 150,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -357,7 +359,10 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                                     "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[i].pdiImageUpload}",
                                   ),
                                 )
-                              : Text("No image selected"),
+                              : pdidata.pcIsBoth.toString() == "0" ||
+                                    pdidata.pcIsBoth.toString() == "1"
+                              ? Text("No image selected ")
+                              : Text(""),
                         ),
                       ),
                       // Padding(
@@ -448,7 +453,11 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                             ),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Remark',
+                              labelText:
+                                  pdidata.pcIsBoth.toString() == "0" ||
+                                      pdidata.pcIsBoth.toString() == "2"
+                                  ? 'Remark *'
+                                  : "Remark(Optional)",
                               labelStyle: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -1073,7 +1082,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
             Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
               width: double.infinity,
-              height: 550,
+              height: MediaQuery.of(context).size.width * 1.3,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: const Color.fromARGB(255, 5, 121, 189), // Border color
@@ -1092,7 +1101,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 130,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -1115,7 +1124,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                         ),
                       ),
                       Container(
-                        width: 150,
+                        width: MediaQuery.of(context).size.width * 0.4,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -1139,7 +1148,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                                 right: 20,
                                 top: 0,
                               ),
-                              width: double.infinity,
+                              width: MediaQuery.of(context).size.width * 0.6,
                               // height: 150,
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -1158,7 +1167,10 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                               ),
                               child: Image.file(_croppedImage!),
                             )
-                          : Text("No image selected"),
+                          : pdidata.pcIsBoth.toString() == "0" ||
+                                pdidata.pcIsBoth.toString() == "1"
+                          ? Text("No image selected ")
+                          : Text(""),
                     ),
                   ),
                   // Padding(
@@ -1233,31 +1245,32 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                   //     })(),
                   //   ),
                   // ),
-                  if (pdidata.pcIsBoth.toString() == "0" ||
-                      pdidata.pcIsBoth.toString() == "2")
-                    Padding(
-                      //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
+                  // if (pdidata.pcIsBoth.toString() == "0" ||
+                  //     pdidata.pcIsBoth.toString() == "2")
+                  Padding(
+                    //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: TextField(
+                      controller: Remark,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
                       ),
-                      child: TextField(
-                        controller: Remark,
-                        style: TextStyle(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText:
+                            pdidata.pcIsBoth.toString() == "0" ||
+                                pdidata.pcIsBoth.toString() == "2"
+                            ? 'Remark *'
+                            : "Remark(Optional)",
+                        labelStyle: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                         ),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Remark',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          hintText: '',
-                        ),
+                        hintText: '',
                       ),
                     ),
+                  ),
                   if (widget.dataloadCurrentIndex >= widget.dataload.length - 1)
                     SizedBox(
                       height: 65,

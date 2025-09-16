@@ -268,7 +268,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                             bottom: 20,
                           ),
                           width: double.infinity,
-                          height: 550,
+                          height: MediaQuery.of(context).size.width * 1.3,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: const Color.fromARGB(
@@ -292,7 +292,8 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 130,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -315,7 +316,8 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                     ),
                                   ),
                                   Container(
-                                    width: 150,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -340,8 +342,16 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                             right: 20,
                                             top: 0,
                                           ),
-                                          width: double.infinity,
-                                          // height: 150,
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.6,
+                                          // height:
+                                          //     MediaQuery.of(
+                                          //       context,
+                                          //     ).size.width *
+                                          //     0.5,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: const Color.fromARGB(
@@ -373,14 +383,37 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                                 .pdiImageUpload
                                                 .toString()
                                                 .isNotEmpty
-                                      ? Container(
+                                      ?
+                                        // ClipRRect(
+                                        //     borderRadius: BorderRadius.only(
+                                        //       bottomLeft: Radius.circular(6),
+                                        //       bottomRight: Radius.circular(6),
+                                        //       topLeft: Radius.circular(6),
+                                        //       topRight: Radius.circular(6),
+                                        //     ),
+                                        //     child: Image.network(
+                                        //       "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[i].pdiImageUpload}",
+                                        //       width: 150,
+                                        //       height: 120,
+                                        //       fit: BoxFit.cover,
+                                        //     ),
+                                        //   )
+                                        Container(
                                           margin: EdgeInsets.only(
                                             left: 20,
                                             right: 20,
                                             top: 0,
                                           ),
-                                          width: double.infinity,
-                                          // height: 150,
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.6,
+                                          //  height:
+                                          //     MediaQuery.of(
+                                          //       context,
+                                          //     ).size.width *
+                                          //     0.4,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: const Color.fromARGB(
@@ -405,11 +438,14 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                             "https://tailpass.com/mycarsdoctor/${widget.pdilistoflead[i].pdiImageUpload}",
                                           ),
                                         )
-                                      : Text("No image selected"),
+                                      : dataload[index].pcIsBoth == "0" ||
+                                            dataload[index].pcIsBoth == "1"
+                                      ? Text("No image selected")
+                                      : Text(""),
                                 ),
                               ),
-                              if (dataload[index].pcIsBoth == "0" ||
-                                  dataload[index].pcIsBoth == "2")
+                              // if (dataload[index].pcIsBoth == "0" ||
+                              //     dataload[index].pcIsBoth == "2")
                                 Padding(
                                   //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                                   padding: EdgeInsets.symmetric(
@@ -424,7 +460,12 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                     ),
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
-                                      labelText: 'Remark',
+
+                                      labelText:
+                                          dataload[index].pcIsBoth == "0" ||
+                                              dataload[index].pcIsBoth == "2"
+                                          ? 'Remark *'
+                                          : "Remark(Optional)",
                                       labelStyle: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -1111,7 +1152,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                         bottom: 20,
                       ),
                       width: double.infinity,
-                      height: 550,
+                      height: MediaQuery.of(context).size.width * 1.3,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromARGB(
@@ -1135,7 +1176,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: 130,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -1158,7 +1199,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                 ),
                               ),
                               Container(
-                                width: 150,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -1182,7 +1223,9 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                         right: 20,
                                         top: 0,
                                       ),
-                                      width: double.infinity,
+                                      width:
+                                          MediaQuery.of(context).size.width *
+                                          0.6,
                                       // height: 150,
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -1206,11 +1249,14 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                       ),
                                       child: Image.file(_croppedImage!),
                                     )
-                                  : Text("No image selected"),
+                                  : dataload[index].pcIsBoth == "0" ||
+                                        dataload[index].pcIsBoth == "1"
+                                  ? Text("No image selected")
+                                  : Text(""),
                             ),
                           ),
-                          if (dataload[index].pcIsBoth == "0" ||
-                              dataload[index].pcIsBoth == "2")
+                          // if (dataload[index].pcIsBoth == "0" ||
+                          //     dataload[index].pcIsBoth == "2")
                             Padding(
                               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                               padding: EdgeInsets.symmetric(
@@ -1225,7 +1271,12 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                                 ),
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Remark',
+                                  labelText:
+                                    dataload[index].pcIsBoth == "0" ||
+                                        dataload[index].pcIsBoth == "2"
+                                    ? 'Remark *'
+                                    : "Remark(Optional)",
+                                  // labelText: 'Remark',
                                   labelStyle: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

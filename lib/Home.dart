@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:basic_utils/basic_utils.dart';
 import 'package:carinspect/AllCarModel.dart';
 import 'package:carinspect/CompletePIDCheckPoint.dart';
 import 'package:carinspect/LeadDetails.dart';
@@ -9,6 +10,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class Home extends StatefulWidget {
   @override
@@ -262,7 +264,7 @@ class _HomeState extends State<Home> with RouteAware {
                             bottom: 20,
                           ),
                           width: double.infinity,
-                          height: 230,
+                          // height: 230,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: const Color.fromARGB(
@@ -286,7 +288,8 @@ class _HomeState extends State<Home> with RouteAware {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 130,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -309,12 +312,15 @@ class _HomeState extends State<Home> with RouteAware {
                                     ),
                                   ),
                                   Container(
-                                    width: 150,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        (dataload[index].userFullName
-                                            .toString()),
+                                        StringUtils.capitalize(
+                                          dataload[index].userName.toString(),
+                                        ),
+                                        // (dataload[index].userName.toString().replaceFirst(title[0], title[0].toUpperCase())),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 14,
@@ -329,7 +335,7 @@ class _HomeState extends State<Home> with RouteAware {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 130,
+                                     width: MediaQuery.of(context).size.width * 0.3,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -353,20 +359,20 @@ class _HomeState extends State<Home> with RouteAware {
                                   ),
                                   InkWell(
                                     onTap: () async {
-                                      var _url = Uri.parse(
-                                        "tel:${car.userPhoneNumber.toString()}",
-                                      );
-                                      if (!await launchUrl(
-                                        _url,
-                                        mode: LaunchMode.externalApplication,
-                                      )) {
-                                        throw Exception(
-                                          'Could not launch $_url',
-                                        );
-                                      }
+                                      // var _url = Uri.parse(
+                                      //   "tel:${car.userPhoneNumber.toString()}",
+                                      // );
+                                      // if (!await launchUrl(
+                                      //   _url,
+                                      //   mode: LaunchMode.externalApplication,
+                                      // )) {
+                                      //   throw Exception(
+                                      //     'Could not launch $_url',
+                                      //   );
+                                      // }
                                     },
                                     child: Container(
-                                      width: 150,
+                                       width: MediaQuery.of(context).size.width * 0.4,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
@@ -390,7 +396,7 @@ class _HomeState extends State<Home> with RouteAware {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 130,
+                                     width: MediaQuery.of(context).size.width * 0.3,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -412,36 +418,69 @@ class _HomeState extends State<Home> with RouteAware {
                                       ),
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () async {
-                                      var _url = Uri.parse(
-                                        "tel:${dataload[index].userPhoneNumber.toString()}",
-                                      );
-                                      if (!await launchUrl(
-                                        _url,
-                                        mode: LaunchMode.externalApplication,
-                                      )) {
-                                        throw Exception(
-                                          'Could not launch $_url',
+                                  if (dataload[index].userPhoneNumber
+                                          .toString() !=
+                                      "null")
+                                    InkWell(
+                                      onTap: () async {
+                                        var _url = Uri.parse(
+                                          "tel:${dataload[index].userPhoneNumber.toString()}",
                                         );
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 150,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          (dataload[index].userPhoneNumber
-                                              .toString()),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 14,
-                                            color: Colors.blue,
+                                        if (!await launchUrl(
+                                          _url,
+                                          mode: LaunchMode.externalApplication,
+                                        )) {
+                                          throw Exception(
+                                            'Could not launch $_url',
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                         width: MediaQuery.of(context).size.width * 0.4,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            (dataload[index].userPhoneNumber
+                                                .toString()),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    InkWell(
+                                      onTap: () async {
+                                        // var _url = Uri.parse(
+                                        //   "tel:${dataload[index].userPhoneNumber.toString()}",
+                                        // );
+                                        // if (!await launchUrl(
+                                        //   _url,
+                                        //   mode: LaunchMode.externalApplication,
+                                        // )) {
+                                        //   throw Exception(
+                                        //     'Could not launch $_url',
+                                        //   );
+                                        // }
+                                      },
+                                      child: Container(
+                                         width: MediaQuery.of(context).size.width * 0.4,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "-",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                              color: Colors.blue,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
                                 ],
                               ),
                               Row(
@@ -449,7 +488,7 @@ class _HomeState extends State<Home> with RouteAware {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 130,
+                                     width: MediaQuery.of(context).size.width * 0.3,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -472,7 +511,7 @@ class _HomeState extends State<Home> with RouteAware {
                                     ),
                                   ),
                                   Container(
-                                    width: 150,
+                                     width: MediaQuery.of(context).size.width * 0.4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Builder(
@@ -517,14 +556,73 @@ class _HomeState extends State<Home> with RouteAware {
                                 ],
                               ),
 
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  if (car.leadStatus.toString() != '0')
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    if (car.leadStatus.toString() != '0')
+                                      SizedBox(
+                                        height: 60,
+                                        width: 120,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20.0,
+                                            ),
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                      Colors.orange,
+                                                    ),
+                                                // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                                                // textStyle: MaterialStateProperty.all(
+                                                //   TextStyle(fontSize: 30, color: Colors.white),
+                                                // ),
+                                              ),
+
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Text(
+                                                    'View',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
+                                                  ),
+                                                  Icon(
+                                                    Icons.arrow_right_alt,
+                                                    size: 15,
+                                                    color: Colors.white,
+                                                  ),
+                                                ],
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Completepidcheckpoint(
+                                                          car: car,
+                                                        ),
+                                                  ),
+                                                );
+                                                print('Successfully log in ');
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     SizedBox(
                                       height: 60,
-                                      width: 120,
+                                      width: 130,
                                       child: Container(
                                         child: Padding(
                                           padding: const EdgeInsets.only(
@@ -534,7 +632,7 @@ class _HomeState extends State<Home> with RouteAware {
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(
-                                                    Colors.orange,
+                                                    Colors.blue,
                                                   ),
                                               // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
                                               // textStyle: MaterialStateProperty.all(
@@ -547,7 +645,7 @@ class _HomeState extends State<Home> with RouteAware {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  'View',
+                                                  'Inspect',
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 12,
@@ -566,9 +664,7 @@ class _HomeState extends State<Home> with RouteAware {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Completepidcheckpoint(
-                                                        car: car,
-                                                      ),
+                                                      Leaddetails(car: car),
                                                 ),
                                               );
                                               print('Successfully log in ');
@@ -577,60 +673,8 @@ class _HomeState extends State<Home> with RouteAware {
                                         ),
                                       ),
                                     ),
-                                  SizedBox(
-                                    height: 60,
-                                    width: 130,
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 20.0,
-                                        ),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                  Colors.blue,
-                                                ),
-                                            // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                                            // textStyle: MaterialStateProperty.all(
-                                            //   TextStyle(fontSize: 30, color: Colors.white),
-                                            // ),
-                                          ),
-
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                'Inspect',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_right_alt,
-                                                size: 15,
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Leaddetails(car: car),
-                                              ),
-                                            );
-                                            print('Successfully log in ');
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),

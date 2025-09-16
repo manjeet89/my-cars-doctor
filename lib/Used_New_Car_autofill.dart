@@ -130,7 +130,7 @@ class _UsedNewCarAutofillState extends State<UsedNewCarAutofill> {
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20, top: 0),
                   width: double.infinity,
-                  height: 220,
+                  // height: 220,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(

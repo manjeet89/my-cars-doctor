@@ -172,7 +172,7 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
                         bottom: 20,
                       ),
                       width: double.infinity,
-                      height: 230,
+                      // height: 230,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromARGB(255, 5, 121, 189),
@@ -228,6 +228,8 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
                               ),
                             ],
                           ),
+
+                          if (dataload[index].pdiComment.toString() != "")
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,126 +276,131 @@ class _CompletepidcheckpointState extends State<Completepidcheckpoint> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 130,
-                                child: Padding(
+                          if (dataload[index].pdiImageUpload.toString() != "")
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 130,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Image",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    "Image",
+                                    ":",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       fontSize: 14,
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  ":",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () async {},
-                                child: Container(
-                                  width: 150,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        5,
-                                        121,
-                                        189,
+                                InkWell(
+                                  onTap: () async {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 150,
+                                      height: 120,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            5,
+                                            121,
+                                            189,
+                                          ),
+                                        ),
+                                        color: const Color.fromARGB(
+                                          255,
+                                          255,
+                                          255,
+                                          255,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(6),
+                                          bottomRight: Radius.circular(6),
+                                          topLeft: Radius.circular(6),
+                                          topRight: Radius.circular(6),
+                                        ),
                                       ),
-                                    ),
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(6),
-                                      bottomRight: Radius.circular(6),
-                                      topLeft: Radius.circular(6),
-                                      topRight: Radius.circular(6),
-                                    ),
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return Dialog(
-                                            backgroundColor: Colors.transparent,
-                                            insetPadding: EdgeInsets.all(0),
-                                            child: Stack(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () => Navigator.of(
-                                                    context,
-                                                  ).pop(),
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    color: Colors.black,
-                                                    child: InteractiveViewer(
-                                                      child: Image.network(
-                                                        "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
-                                                        fit: BoxFit.contain,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding: EdgeInsets.all(0),
+                                                child: Stack(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () => Navigator.of(
+                                                        context,
+                                                      ).pop(),
+                                                      child: Container(
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        color: Colors.black,
+                                                        child: InteractiveViewer(
+                                                          child: Image.network(
+                                                            "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 30,
-                                                  right: 30,
-                                                  child: IconButton(
-                                                    icon: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                      size: 32,
+                                                    Positioned(
+                                                      top: 30,
+                                                      right: 30,
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.close,
+                                                          color: Colors.white,
+                                                          size: 32,
+                                                        ),
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                              context,
+                                                            ).pop(),
+                                                      ),
                                                     ),
-                                                    onPressed: () =>
-                                                        Navigator.of(
-                                                          context,
-                                                        ).pop(),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              );
+                                            },
                                           );
                                         },
-                                      );
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(6),
-                                        bottomRight: Radius.circular(6),
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                      ),
-                                      child: Image.network(
-                                        "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
-                                        width: 150,
-                                        height: 120,
-                                        fit: BoxFit.cover,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(6),
+                                            bottomRight: Radius.circular(6),
+                                            topLeft: Radius.circular(6),
+                                            topRight: Radius.circular(6),
+                                          ),
+                                          child: Image.network(
+                                            "https://tailpass.com/mycarsdoctor/${car.pdiImageUpload.toString()}",
+                                            width: 150,
+                                            height: 120,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                         ],
                       ),
                     ),

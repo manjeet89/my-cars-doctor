@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:basic_utils/basic_utils.dart';
 import 'package:carinspect/AllCarModel.dart';
 import 'package:carinspect/Used_New_Car_autofill.dart';
 import 'package:flutter/material.dart';
@@ -232,9 +233,9 @@ class _LeaddetailsState extends State<Leaddetails> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 0),
+                  margin: EdgeInsets.only(left: 20, right: 20, top: 0,bottom: 20),
                   width: double.infinity,
-                  height: 150,
+                  // height: 150,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(
@@ -367,19 +368,34 @@ class _LeaddetailsState extends State<Leaddetails> {
                                 ),
                               ),
                             ),
-                            Container(
-                              width: 150,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  widget.car.manufacturingYear.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14,
+                            if (widget.car.manufacturingYear.toString() != "")
+                              Container(
+                                width: 150,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    widget.car.manufacturingYear.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              Container(
+                                width: 150,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "-",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                     ],
@@ -435,7 +451,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20, top: 0),
                   width: double.infinity,
-                  height: 120,
+                  // height: 120,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(
@@ -486,7 +502,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                widget.car.userFullName.toString(),
+                              StringUtils.capitalize(  widget.car.userName.toString()),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 14,

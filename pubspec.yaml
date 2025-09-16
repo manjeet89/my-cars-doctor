@@ -46,6 +46,8 @@ dependencies:
   shared_preferences: ^2.5.3
   http: ^1.5.0
   lottie: ^3.3.1
+  intl: ^0.20.2
+  basic_utils: ^5.8.2
 
 dev_dependencies:
   flutter_test:
