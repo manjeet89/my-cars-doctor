@@ -74,7 +74,7 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
     }
 
     if (responce.statusCode == 200) {
-      for (Map<String, dynamic> index in dataarray) {
+      for (Map<String, dynamic> index in dataarray.reversed) {
         dataload.add(PdiCheckPointModel.fromJson(index));
       }
       setState(() {
@@ -446,34 +446,34 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                               ),
                               // if (dataload[index].pcIsBoth == "0" ||
                               //     dataload[index].pcIsBoth == "2")
-                                Padding(
-                                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
+                              Padding(
+                                //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                child: TextField(
+                                  controller: Remark,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  child: TextField(
-                                    controller: Remark,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
 
-                                      labelText:
-                                          dataload[index].pcIsBoth == "0" ||
-                                              dataload[index].pcIsBoth == "2"
-                                          ? 'Remark *'
-                                          : "Remark(Optional)",
-                                      labelStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      hintText: '',
+                                    labelText:
+                                        dataload[index].pcIsBoth == "0" ||
+                                            dataload[index].pcIsBoth == "2"
+                                        ? 'Remark *'
+                                        : "Remark(Optional)",
+                                    labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                     ),
+                                    hintText: '',
                                   ),
                                 ),
+                              ),
                               if (currentIndex >= dataload.length - 1)
                                 SizedBox(
                                   height: 65,
@@ -1257,34 +1257,34 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
                           ),
                           // if (dataload[index].pcIsBoth == "0" ||
                           //     dataload[index].pcIsBoth == "2")
-                            Padding(
-                              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 10,
+                          Padding(
+                            //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 10,
+                            ),
+                            child: TextField(
+                              controller: Remark,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
                               ),
-                              child: TextField(
-                                controller: Remark,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText:
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText:
                                     dataload[index].pcIsBoth == "0" ||
                                         dataload[index].pcIsBoth == "2"
                                     ? 'Remark *'
                                     : "Remark(Optional)",
-                                  // labelText: 'Remark',
-                                  labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  hintText: '',
+                                // labelText: 'Remark',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                hintText: '',
                               ),
                             ),
+                          ),
                           if (currentIndex >= dataload.length - 1)
                             SizedBox(
                               height: 65,
