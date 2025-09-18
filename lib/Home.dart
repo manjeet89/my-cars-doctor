@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:basic_utils/basic_utils.dart';
 import 'package:carinspect/AllCarModel.dart';
+import 'package:carinspect/CompleteInspection.dart';
 import 'package:carinspect/CompletePIDCheckPoint.dart';
 import 'package:carinspect/LeadDetails.dart';
 import 'package:carinspect/login.dart';
@@ -10,7 +11,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class Home extends StatefulWidget {
   @override
@@ -84,7 +84,9 @@ class _HomeState extends State<Home> with RouteAware {
 
     if (responce.statusCode == 200) {
       for (Map<String, dynamic> index in dataarray) {
-        dataload.add(AllcarModel.fromJson(index));
+        if (index['lead_status'].toString() != '2') {
+          dataload.add(AllcarModel.fromJson(index));
+        }
       }
       return dataload;
     } else {
@@ -168,7 +170,7 @@ class _HomeState extends State<Home> with RouteAware {
               children: [
                 Center(
                   child: Text(
-                    "Customer List",
+                    "Home",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -186,529 +188,783 @@ class _HomeState extends State<Home> with RouteAware {
               ],
             ),
           ),
-          body: FutureBuilder(
-            future: FetchData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError && snapshot.error == 'no_data') {
-                return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return Center(
+          body: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 20, right: 20, top: 5),
+                width: double.infinity,
+                // height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                      255,
+                      5,
+                      121,
+                      189,
+                    ), // Border color
+                    // width: 2.0, // Border width
+                  ),
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(6),
+                    topRight: Radius.circular(6),
+                    bottomRight: Radius.circular(6),
+                    bottomLeft: Radius.circular(6),
+                  ), // Rounded corners
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    /// ZondIcons' Icon
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Icon(TeenyIcons.car, color: Color(0xFF4e73b4)),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'No data',
+                        "Customer List",
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
                         ),
                       ),
-                    );
-                  },
-                );
-              } else if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: dataload.length,
-                  itemBuilder: (context, index) {
-                    final car = dataload[index]; // One car
-                    return Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                          width: double.infinity,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color.fromARGB(
-                                255,
-                                5,
-                                121,
-                                189,
-                              ), // Border color
-                              // width: 2.0, // Border width
-                            ),
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                            ), // Rounded corners
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Column(
                             children: [
-                              /// ZondIcons' Icon
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  TeenyIcons.car,
-                                  color: Color(0xFF4e73b4),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Owner Details",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16,
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       width: 20,
+                              //       child: Text(
+                              //         " A ",
+                              //         style: TextStyle(
+                              //           fontWeight: FontWeight.w800,
+                              //           fontSize: 12,
+                              //           color: Colors.blue,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     Text(" : "),
+                              //     Container(
+                              //       width: 70,
+                              //       child: Text(
+                              //         " All ",
+                              //         style: TextStyle(
+                              //           fontWeight: FontWeight.w800,
+                              //           fontSize: 12,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 20,
+                                    child: Text(
+                                      " O ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.orange,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Text(" : "),
+                                  Container(
+                                    width: 70,
+                                    child: Text(
+                                      " Ongoing ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.orange,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 20,
+                                    child: Text(
+                                      " C ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(" : "),
+                                  Container(
+                                    width: 70,
+                                    child: Text(
+                                      " Complete ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ), 
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 20,
+                                    child: Text(
+                                      " I ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.greenAccent,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(" : "),
+                                  Container(
+                                    width: 70,
+                                    child: Text(
+                                      " Inital ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Colors.greenAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            top: 0,
-                            bottom: 20,
-                          ),
-                          width: double.infinity,
-                          // height: 230,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color.fromARGB(
-                                255,
-                                5,
-                                121,
-                                189,
-                              ), // Border color
-                              // width: 2.0, // Border width
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: FutureBuilder(
+                  future: FetchData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError && snapshot.error == 'no_data') {
+                      return ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return Center(
+                            child: Text(
+                              'No data',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(6),
-                              bottomRight: Radius.circular(6),
-                            ), // Rounded corners
-                          ),
-                          child: Column(
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: dataload.length,
+                        itemBuilder: (context, index) {
+                          final car = dataload[index]; // One car
+                          return Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Name",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 5,
+                                ),
+                                width: double.infinity,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      ":",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
                                   ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        StringUtils.capitalize(
-                                          dataload[index].userName.toString(),
-                                        ),
-                                        // (dataload[index].userName.toString().replaceFirst(title[0], title[0].toUpperCase())),
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                     width: MediaQuery.of(context).size.width * 0.3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Type of Car",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      ":",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      // var _url = Uri.parse(
-                                      //   "tel:${car.userPhoneNumber.toString()}",
-                                      // );
-                                      // if (!await launchUrl(
-                                      //   _url,
-                                      //   mode: LaunchMode.externalApplication,
-                                      // )) {
-                                      //   throw Exception(
-                                      //     'Could not launch $_url',
-                                      //   );
-                                      // }
-                                    },
-                                    child: Container(
-                                       width: MediaQuery.of(context).size.width * 0.4,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          (dataload[index].isNewCar
-                                                      .toString() ==
-                                                  "1"
-                                              ? "New Car"
-                                              : "Used Car"),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                     width: MediaQuery.of(context).size.width * 0.3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Number",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      ":",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  if (dataload[index].userPhoneNumber
-                                          .toString() !=
-                                      "null")
-                                    InkWell(
-                                      onTap: () async {
-                                        var _url = Uri.parse(
-                                          "tel:${dataload[index].userPhoneNumber.toString()}",
-                                        );
-                                        if (!await launchUrl(
-                                          _url,
-                                          mode: LaunchMode.externalApplication,
-                                        )) {
-                                          throw Exception(
-                                            'Could not launch $_url',
-                                          );
-                                        }
-                                      },
-                                      child: Container(
-                                         width: MediaQuery.of(context).size.width * 0.4,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            (dataload[index].userPhoneNumber
-                                                .toString()),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 14,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  else
-                                    InkWell(
-                                      onTap: () async {
-                                        // var _url = Uri.parse(
-                                        //   "tel:${dataload[index].userPhoneNumber.toString()}",
-                                        // );
-                                        // if (!await launchUrl(
-                                        //   _url,
-                                        //   mode: LaunchMode.externalApplication,
-                                        // )) {
-                                        //   throw Exception(
-                                        //     'Could not launch $_url',
-                                        //   );
-                                        // }
-                                      },
-                                      child: Container(
-                                         width: MediaQuery.of(context).size.width * 0.4,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "-",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 14,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                     width: MediaQuery.of(context).size.width * 0.3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "Status",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      ":",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                     width: MediaQuery.of(context).size.width * 0.4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          String status = car.leadStatus
-                                              .toString();
-                                          String text = '';
-                                          Color color = Colors.black;
-                                          switch (status) {
-                                            case '0':
-                                              text = 'Initial';
-                                              color = Colors.greenAccent;
-                                              break;
-                                            case '1':
-                                              text = 'In Progress';
-                                              color = Colors.orange;
-                                              break;
-                                            case '2':
-                                              text = 'Complete';
-                                              color = Colors.blue;
-                                              break;
-                                            case '3':
-                                              text = 'Cancel';
-                                              color = Colors.red;
-                                              break;
-                                            default:
-                                              text = 'Unknown';
-                                              color = Colors.grey;
-                                          }
-                                          return Text(
-                                            text,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 14,
-                                              color: color,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(6),
+                                    topRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    if (car.leadStatus.toString() != '0')
-                                      SizedBox(
-                                        height: 60,
-                                        width: 120,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 20.0,
-                                            ),
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                      Colors.orange,
-                                                    ),
-                                                // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                                                // textStyle: MaterialStateProperty.all(
-                                                //   TextStyle(fontSize: 30, color: Colors.white),
-                                                // ),
-                                              ),
-
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  Text(
-                                                    'View',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.arrow_right_alt,
-                                                    size: 15,
-                                                    color: Colors.white,
-                                                  ),
-                                                ],
-                                              ),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Completepidcheckpoint(
-                                                          car: car,
-                                                        ),
-                                                  ),
-                                                );
-                                                print('Successfully log in ');
-                                              },
-                                            ),
-                                          ),
-                                        ),
+                                    /// ZondIcons' Icon
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        TeenyIcons.car,
+                                        color: Color(0xFF4e73b4),
                                       ),
-                                    SizedBox(
-                                      height: 60,
-                                      width: 130,
-                                      child: Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 20.0,
-                                          ),
-                                          child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                    Colors.blue,
-                                                  ),
-                                              // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                                              // textStyle: MaterialStateProperty.all(
-                                              //   TextStyle(fontSize: 30, color: Colors.white),
-                                              // ),
-                                            ),
-
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  'Inspect',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.arrow_right_alt,
-                                                  size: 15,
-                                                  color: Colors.white,
-                                                ),
-                                              ],
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Leaddetails(car: car),
-                                                ),
-                                              );
-                                              print('Successfully log in ');
-                                            },
-                                          ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Owner Details",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 16,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 0,
+                                  bottom: 20,
+                                ),
+                                width: double.infinity,
+                                // height: 230,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
+                                  ),
+                                  color: const Color.fromARGB(
+                                    255,
+                                    255,
+                                    255,
+                                    255,
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(6),
+                                    bottomRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Name",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.4,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              StringUtils.capitalize(
+                                                dataload[index].userFullName
+                                                    .toString(),
+                                              ),
+                                              // (dataload[index].userFullName.toString().replaceFirst(title[0], title[0].toUpperCase())),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Type of Car",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            // var _url = Uri.parse(
+                                            //   "tel:${car.userPhoneNumber.toString()}",
+                                            // );
+                                            // if (!await launchUrl(
+                                            //   _url,
+                                            //   mode: LaunchMode.externalApplication,
+                                            // )) {
+                                            //   throw Exception(
+                                            //     'Could not launch $_url',
+                                            //   );
+                                            // }
+                                          },
+                                          child: Container(
+                                            width:
+                                                MediaQuery.of(
+                                                  context,
+                                                ).size.width *
+                                                0.4,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(
+                                                8.0,
+                                              ),
+                                              child: Text(
+                                                (dataload[index].isNewCar
+                                                            .toString() ==
+                                                        "1"
+                                                    ? "New Car"
+                                                    : "Used Car"),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Number",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                        if (dataload[index].userPhoneNumber
+                                                .toString() !=
+                                            "null")
+                                          InkWell(
+                                            onTap: () async {
+                                              var _url = Uri.parse(
+                                                "tel:${dataload[index].userPhoneNumber.toString()}",
+                                              );
+                                              if (!await launchUrl(
+                                                _url,
+                                                mode: LaunchMode
+                                                    .externalApplication,
+                                              )) {
+                                                throw Exception(
+                                                  'Could not launch $_url',
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.width *
+                                                  0.4,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(
+                                                  8.0,
+                                                ),
+                                                child: Text(
+                                                  (dataload[index]
+                                                      .userPhoneNumber
+                                                      .toString()),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 14,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        else
+                                          InkWell(
+                                            onTap: () async {
+                                              // var _url = Uri.parse(
+                                              //   "tel:${dataload[index].userPhoneNumber.toString()}",
+                                              // );
+                                              // if (!await launchUrl(
+                                              //   _url,
+                                              //   mode: LaunchMode.externalApplication,
+                                              // )) {
+                                              //   throw Exception(
+                                              //     'Could not launch $_url',
+                                              //   );
+                                              // }
+                                            },
+                                            child: Container(
+                                              width:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.width *
+                                                  0.4,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(
+                                                  8.0,
+                                                ),
+                                                child: Text(
+                                                  "-",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 14,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Status",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            ":",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.4,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                String status = car.leadStatus
+                                                    .toString();
+                                                String text = '';
+                                                Color color = Colors.black;
+                                                switch (status) {
+                                                  case '0':
+                                                    text = 'Initial';
+                                                    color = Colors.greenAccent;
+                                                    break;
+                                                  case '1':
+                                                    text = 'In Progress';
+                                                    color = Colors.orange;
+                                                    break;
+                                                  case '2':
+                                                    text = 'Complete';
+                                                    color = Colors.blue;
+                                                    break;
+                                                  case '3':
+                                                    text = 'Cancel';
+                                                    color = Colors.red;
+                                                    break;
+                                                  default:
+                                                    text = 'Unknown';
+                                                    color = Colors.grey;
+                                                }
+                                                return Text(
+                                                  text,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 14,
+                                                    color: color,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          if (car.leadStatus.toString() != '0')
+                                            SizedBox(
+                                              height: 60,
+                                              width: 120,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 20.0,
+                                                      ),
+                                                  child: ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all(
+                                                            Colors.orange,
+                                                          ),
+                                                      // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                                                      // textStyle: MaterialStateProperty.all(
+                                                      //   TextStyle(fontSize: 30, color: Colors.white),
+                                                      // ),
+                                                    ),
+
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Text(
+                                                          'View',
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                        Icon(
+                                                          Icons.arrow_right_alt,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Completepidcheckpoint(
+                                                                car: car,
+                                                              ),
+                                                        ),
+                                                      );
+                                                      print(
+                                                        'Successfully log in ',
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          SizedBox(
+                                            height: 60,
+                                            width: 130,
+                                            child: Container(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 20.0,
+                                                ),
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all(
+                                                          Colors.blue,
+                                                        ),
+                                                    // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                                                    // textStyle: MaterialStateProperty.all(
+                                                    //   TextStyle(fontSize: 30, color: Colors.white),
+                                                    // ),
+                                                  ),
+
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Text(
+                                                        'Inspect',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_right_alt,
+                                                        size: 15,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Leaddetails(
+                                                              car: car,
+                                                            ),
+                                                      ),
+                                                    );
+                                                    print(
+                                                      'Successfully log in ',
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
+                          );
+                        },
+                      );
+                    } else if (dataload.isEmpty) {
+                      return Center(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: CircularProgressIndicator(),
                           ),
                         ),
-                      ],
-                    );
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                   },
-                );
-              } else if (dataload.isEmpty) {
-                return Center(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
+                ),
+              ),
+            ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.download_done_outlined),
+            backgroundColor: const Color.fromARGB(255, 25, 39, 235),
+            foregroundColor: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Completeinspection()),
+              );
             },
           ),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          // floatingActionButton: FloatingActionButton(
-          //   child: Icon(Icons.add),
-          //   backgroundColor: const Color(0xFFFF5733),
-          //   foregroundColor: Colors.white,
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => Completeinspection()),
-          //     );
-          //   },
-          // ),
         ),
       ),
     );

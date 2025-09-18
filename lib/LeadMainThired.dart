@@ -44,7 +44,7 @@ class _LeadmainthiredState extends State<Leadmainthired> {
   int currentIndex = 0; // start from first checkpoint
 
   File? _croppedImage;
-  TextEditingController Remark = TextEditingController();
+  final TextEditingController Remark = TextEditingController();
 
   Future<void> _pickAndCropImage() async {
     final picker = ImagePicker();
@@ -69,6 +69,12 @@ class _LeadmainthiredState extends State<Leadmainthired> {
         });
       }
     }
+  }
+
+  @override
+  void dispose() {
+    Remark.dispose(); // Clean up when page is destroyed
+    super.dispose();
   }
 
   MarkedLeadAsPdiComplete(String value) async {
@@ -150,7 +156,9 @@ class _LeadmainthiredState extends State<Leadmainthired> {
       if (widget.pdilistoflead[i].pcId.toString() ==
           widget.dataload[widget.dataloadCurrentIndex].pcId.toString()) {
         // Autofill Remark from pdicomment
-        Remark.text = widget.pdilistoflead[i].pdiComment?.toString() ?? "";
+        if (Remark.text.isEmpty) {
+          Remark.text = widget.pdilistoflead[i].pdiComment?.toString() ?? "";
+        }
         return Scaffold(
           backgroundColor: const Color.fromARGB(255, 219, 224, 233),
           appBar: AppBar(
@@ -158,15 +166,40 @@ class _LeadmainthiredState extends State<Leadmainthired> {
             automaticallyImplyLeading: false,
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Center(
-                  child: Text(
-                    "PDI Check Point",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      widget.car.brandName.toString().toUpperCase() +
+                          " " +
+                          widget.car.modelName.toString().toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 255, 255)),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home()),
+                          );
+                        },
+                        child: Icon(
+                          Icons.home,
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -437,35 +470,35 @@ class _LeadmainthiredState extends State<Leadmainthired> {
                       //     })(),
                       //   ),
                       // ),
-                      if (pdidata.pcIsBoth.toString() == "0" ||
-                          pdidata.pcIsBoth.toString() == "2")
-                        Padding(
-                          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
+                      // if (pdidata.pcIsBoth.toString() == "0" ||
+                      //     pdidata.pcIsBoth.toString() == "2")
+                      Padding(
+                        //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        child: TextField(
+                          controller: Remark,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
-                          child: TextField(
-                            controller: Remark,
-                            style: TextStyle(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText:
+                                pdidata.pcIsBoth.toString() == "0" ||
+                                    pdidata.pcIsBoth.toString() == "2"
+                                ? 'Remark *'
+                                : "Remark(Optional)",
+                            labelStyle: TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.bold,
                             ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText:
-                                  pdidata.pcIsBoth.toString() == "0" ||
-                                      pdidata.pcIsBoth.toString() == "2"
-                                  ? 'Remark *'
-                                  : "Remark(Optional)",
-                              labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              hintText: '',
-                            ),
+                            hintText: '',
                           ),
                         ),
+                      ),
                       if (widget.dataloadCurrentIndex >=
                           widget.dataload.length - 1)
                         SizedBox(
@@ -1025,15 +1058,40 @@ class _LeadmainthiredState extends State<Leadmainthired> {
         automaticallyImplyLeading: false,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(
-              child: Text(
-                "PDI Check Point",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  widget.car.brandName.toString().toUpperCase() +
+                      " " +
+                      widget.car.modelName.toString().toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  // Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 255, 255)),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
+                    },
+                    child: Icon(
+                      Icons.home,
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

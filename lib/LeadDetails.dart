@@ -233,7 +233,12 @@ class _LeaddetailsState extends State<Leaddetails> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 0,bottom: 20),
+                  margin: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 20,
+                  ),
                   width: double.infinity,
                   // height: 150,
                   decoration: BoxDecoration(
@@ -259,7 +264,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 140,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -282,7 +287,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                             ),
                           ),
                           Container(
-                            width: 150,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -302,7 +307,52 @@ class _LeaddetailsState extends State<Leaddetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 140,
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Type of Car",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              ":",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                (widget.car.isNewCar.toString() == "1"
+                                    ? "New Car"
+                                    : "Used Car"),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -325,7 +375,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                             ),
                           ),
                           Container(
-                            width: 150,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -339,14 +389,15 @@ class _LeaddetailsState extends State<Leaddetails> {
                           ),
                         ],
                       ),
-                      if (widget.car.manufacturingYear.toString() == "" ||
-                          widget.car.manufacturingYear.toString() == "null")
+                      // if (widget.car.manufacturingYear.toString() == "" ||
+                      //     widget.car.manufacturingYear.toString() == "null")
+                      if (widget.car.isNewCar.toString() != "1")
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: 140,
+                              width: MediaQuery.of(context).size.width * 0.3,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
@@ -370,7 +421,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                             ),
                             if (widget.car.manufacturingYear.toString() != "")
                               Container(
-                                width: 150,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -384,7 +435,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                               )
                             else
                               Container(
-                                width: 150,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -475,7 +526,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 140,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -498,11 +549,13 @@ class _LeaddetailsState extends State<Leaddetails> {
                             ),
                           ),
                           Container(
-                            width: 140,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                              StringUtils.capitalize(  widget.car.userName.toString()),
+                                StringUtils.capitalize(
+                                  widget.car.userFullName.toString(),
+                                ),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 14,
@@ -517,7 +570,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 140,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
@@ -552,7 +605,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                               }
                             },
                             child: Container(
-                              width: 140,
+                              width: MediaQuery.of(context).size.width * 0.3,
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(
@@ -677,7 +730,7 @@ class _LeaddetailsState extends State<Leaddetails> {
               children: [
                 SizedBox(
                   height: 65,
-                  width: 150,
+                  width: MediaQuery.of(context).size.width * 0.4,
                   child: Container(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20.0),
@@ -710,7 +763,7 @@ class _LeaddetailsState extends State<Leaddetails> {
                 ),
                 SizedBox(
                   height: 65,
-                  width: 150,
+                  width: MediaQuery.of(context).size.width * 0.4,
                   child: Container(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20.0),

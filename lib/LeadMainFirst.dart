@@ -120,7 +120,13 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
   }
 
   File? _croppedImage;
-  TextEditingController Remark = TextEditingController();
+  final TextEditingController Remark = TextEditingController();
+
+  @override
+  void dispose() {
+    Remark.dispose(); //  Clean up when page is destroyed
+    super.dispose();
+  }
 
   Future<void> _pickAndCropImage() async {
     final picker = ImagePicker();
@@ -191,15 +197,40 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
             automaticallyImplyLeading: false,
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Center(
-                  child: Text(
-                    "PDI Check Point",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      widget.car.brandName.toString().toUpperCase() +
+                          " " +
+                          widget.car.modelName.toString().toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 255, 255)),
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home()),
+                          );
+                        },
+                        child: Icon(
+                          Icons.home,
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -1074,20 +1105,45 @@ class _LeadmainfirstState extends State<Leadmainfirst> {
         backgroundColor: const Color(0xFF4e73b4),
         automaticallyImplyLeading: false,
         title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                "PDI Check Point",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      widget.car.brandName.toString().toUpperCase() +
+                          " " +
+                          widget.car.modelName.toString().toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      // Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 255, 255)),
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home()),
+                          );
+                        },
+                        child: Icon(
+                          Icons.home,
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
       ),
       body: FutureBuilder(
         future: _futureData,

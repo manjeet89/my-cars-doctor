@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
                   /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                  child: Image.asset('assets/porche.png'),
+                  child: Image.asset('assets/mycarsdoctor.png'),
                 ),
               ),
             ),
@@ -69,11 +69,19 @@ class _LoginState extends State<Login> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
                 controller: number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Phone number, email or username',
-                  hintText: 'Enter valid email id as abc@gmail.com',
+                  labelText: 'Phone Number',
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  hintText: 'Enter valid phone number',
                 ),
               ),
             ),
@@ -86,14 +94,24 @@ class _LoginState extends State<Login> {
               ),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
                 controller: password,
                 obscureText: passwordVisible,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
+                  labelStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
                   hintText: "Password",
                   labelText: "Password",
                   helperText: "Password must contain special character",
-                  helperStyle: TextStyle(color: Colors.green),
+                  helperStyle: TextStyle(
+                    color: const Color.fromARGB(255, 74, 133, 76),
+                  ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -218,33 +236,33 @@ class _LoginState extends State<Login> {
             ),
 
             SizedBox(height: 50),
-            Container(
-              child: Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 2),
-                      child: Text('Forgot your login details? '),
-                    ),
+            // Container(
+            //   child: Center(
+            //     child: Row(
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 2),
+            //           child: Text('Forgot your login details? '),
+            //         ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1.0),
-                      child: InkWell(
-                        onTap: () {
-                          print('hello');
-                        },
-                        child: Text(
-                          'Get help logging in.',
-                          style: TextStyle(fontSize: 14, color: Colors.blue),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 1.0),
+            //           child: InkWell(
+            //             onTap: () {
+            //               print('hello');
+            //             },
+            //             child: Text(
+            //               'Get help logging in.',
+            //               style: TextStyle(fontSize: 14, color: Colors.blue),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
