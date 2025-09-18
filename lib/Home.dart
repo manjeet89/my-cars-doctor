@@ -39,7 +39,7 @@ class _HomeState extends State<Home> with RouteAware {
   void didPopNext() {
     // Called when user comes back to this page
     setState(() {
-      FetchData();
+      FetchData("");
     });
   }
 
@@ -47,16 +47,17 @@ class _HomeState extends State<Home> with RouteAware {
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
   String userid = "";
   String token = "";
+  String Title = "All Customer List";
   List<AllcarModel> dataload = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FetchData();
+    // FetchData();
   }
 
-  Future<List<AllcarModel>> FetchData() async {
+  Future<List<AllcarModel>> FetchData(String value) async {
     SharedPreferences sharedprefrence = await SharedPreferences.getInstance();
     userid = sharedprefrence.getString("Userid")!;
     token = sharedprefrence.getString("Token")!;
@@ -84,7 +85,9 @@ class _HomeState extends State<Home> with RouteAware {
 
     if (responce.statusCode == 200) {
       for (Map<String, dynamic> index in dataarray) {
-        if (index['lead_status'].toString() != '2') {
+        if (index['lead_status'].toString() == value) {
+          dataload.add(AllcarModel.fromJson(index));
+        } else if (value == "") {
           dataload.add(AllcarModel.fromJson(index));
         }
       }
@@ -156,7 +159,13 @@ class _HomeState extends State<Home> with RouteAware {
       child: RefreshIndicator(
         onRefresh: () async {
           setState(() {
-            FetchData();
+            Title = "All Customer List";
+            dataload.clear();
+          });
+          FetchData("").then((value) {
+            setState(() {
+              dataload = value;
+            });
           });
         },
         child: Scaffold(
@@ -212,7 +221,7 @@ class _HomeState extends State<Home> with RouteAware {
                     bottomLeft: Radius.circular(6),
                   ), // Rounded corners
                 ),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -224,137 +233,316 @@ class _HomeState extends State<Home> with RouteAware {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Customer List",
+                        Title,
                         style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
+                          color: Title == "Ongoing Customer List"
+                              ? Colors.orange
+                              : Title == "Complete Customer List"
+                              ? Colors.blue
+                              : Title == "Pending Customer List"
+                              ? Colors.greenAccent
+                              : const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   crossAxisAlignment: CrossAxisAlignment.center,
-                              //   children: [
-                              //     Container(
-                              //       width: 20,
-                              //       child: Text(
-                              //         " A ",
-                              //         style: TextStyle(
-                              //           fontWeight: FontWeight.w800,
-                              //           fontSize: 12,
-                              //           color: Colors.blue,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     Text(" : "),
-                              //     Container(
-                              //       width: 70,
-                              //       child: Text(
-                              //         " All ",
-                              //         style: TextStyle(
-                              //           fontWeight: FontWeight.w800,
-                              //           fontSize: 12,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 20,
-                                    child: Text(
-                                      " O ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.orange,
-                                      ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
+                                  ),
+                                  color: const Color.fromARGB(255, 37, 35, 35),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(6),
+                                    topRight: Radius.circular(6),
+                                    bottomLeft: Radius.circular(6),
+                                    bottomRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Title = "All Customer List";
+                                        dataload.clear();
+                                      });
+                                      FetchData("").then((value) {
+                                        setState(() {
+                                          dataload = value;
+                                        });
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          child: Text(
+                                            " A ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          " : ",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Container(
+                                          width: 70,
+                                          child: Text(
+                                            " All ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(" : "),
-                                  Container(
-                                    width: 70,
-                                    child: Text(
-                                      " Ongoing ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.orange,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 20,
-                                    child: Text(
-                                      " C ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.blue,
-                                      ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
+                                  ),
+                                  color: Colors.orange,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(6),
+                                    topRight: Radius.circular(6),
+                                    bottomLeft: Radius.circular(6),
+                                    bottomRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Title = "Ongoing Customer List";
+                                        dataload.clear();
+                                      });
+                                      FetchData("1").then((value) {
+                                        setState(() {
+                                          dataload = value;
+                                        });
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          child: Text(
+                                            " O ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          " : ",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Container(
+                                          width: 70,
+                                          child: Text(
+                                            " Ongoing ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(" : "),
-                                  Container(
-                                    width: 70,
-                                    child: Text(
-                                      " Complete ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.blue,
-                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
+                                  ),
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(6),
+                                    topRight: Radius.circular(6),
+                                    bottomLeft: Radius.circular(6),
+                                    bottomRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Title = "Complete Customer List";
+                                        dataload.clear();
+                                      });
+                                      FetchData("2").then((value) {
+                                        setState(() {
+                                          dataload = value;
+                                        });
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          child: Text(
+                                            " C ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          " : ",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Container(
+                                          width: 70,
+                                          child: Text(
+                                            " Complete ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ), 
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 20,
-                                    child: Text(
-                                      " I ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.greenAccent,
-                                      ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      5,
+                                      121,
+                                      189,
+                                    ), // Border color
+                                    // width: 2.0, // Border width
+                                  ),
+                                  color: Colors.greenAccent,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(6),
+                                    topRight: Radius.circular(6),
+                                    bottomLeft: Radius.circular(6),
+                                    bottomRight: Radius.circular(6),
+                                  ), // Rounded corners
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        Title = "Pending Customer List";
+                                        dataload.clear();
+                                      });
+                                      FetchData("0").then((value) {
+                                        setState(() {
+                                          dataload = value;
+                                        });
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          child: Text(
+                                            " P ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          " : ",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Container(
+                                          width: 70,
+                                          child: Text(
+                                            " Pending ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Text(" : "),
-                                  Container(
-                                    width: 70,
-                                    child: Text(
-                                      " Inital ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 12,
-                                        color: Colors.greenAccent,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
@@ -366,7 +554,13 @@ class _HomeState extends State<Home> with RouteAware {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: FetchData(),
+                  future: Title == "Ongoing Customer List"
+                      ? FetchData("1")
+                      : Title == "Complete Customer List"
+                      ? FetchData("2")
+                      : Title == "Pending Customer List"
+                      ? FetchData("0")
+                      : FetchData(""),
                   builder: (context, snapshot) {
                     if (snapshot.hasError && snapshot.error == 'no_data') {
                       return ListView.builder(
@@ -766,11 +960,11 @@ class _HomeState extends State<Home> with RouteAware {
                                                 Color color = Colors.black;
                                                 switch (status) {
                                                   case '0':
-                                                    text = 'Initial';
+                                                    text = 'Pending';
                                                     color = Colors.greenAccent;
                                                     break;
                                                   case '1':
-                                                    text = 'In Progress';
+                                                    text = 'Ongoing';
                                                     color = Colors.orange;
                                                     break;
                                                   case '2':
@@ -867,65 +1061,67 @@ class _HomeState extends State<Home> with RouteAware {
                                                 ),
                                               ),
                                             ),
-                                          SizedBox(
-                                            height: 60,
-                                            width: 130,
-                                            child: Container(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 20.0,
-                                                ),
-                                                child: ElevatedButton(
-                                                  style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty.all(
-                                                          Colors.blue,
-                                                        ),
-                                                    // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                                                    // textStyle: MaterialStateProperty.all(
-                                                    //   TextStyle(fontSize: 30, color: Colors.white),
-                                                    // ),
-                                                  ),
+                                          if (car.leadStatus.toString() != '2')
+                                            SizedBox(
+                                              height: 60,
+                                              width: 130,
+                                              child: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 20.0,
+                                                      ),
+                                                  child: ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty.all(
+                                                            Colors.blue,
+                                                          ),
+                                                      // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                                                      // textStyle: MaterialStateProperty.all(
+                                                      //   TextStyle(fontSize: 30, color: Colors.white),
+                                                      // ),
+                                                    ),
 
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Text(
-                                                        'Inspect',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w800,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Text(
+                                                          'Inspect',
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Icon(
-                                                        Icons.arrow_right_alt,
-                                                        size: 15,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ],
+                                                        Icon(
+                                                          Icons.arrow_right_alt,
+                                                          size: 15,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Leaddetails(
+                                                                car: car,
+                                                              ),
+                                                        ),
+                                                      );
+                                                      print(
+                                                        'Successfully log in ',
+                                                      );
+                                                    },
                                                   ),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Leaddetails(
-                                                              car: car,
-                                                            ),
-                                                      ),
-                                                    );
-                                                    print(
-                                                      'Successfully log in ',
-                                                    );
-                                                  },
                                                 ),
                                               ),
                                             ),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -953,18 +1149,18 @@ class _HomeState extends State<Home> with RouteAware {
               ),
             ],
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.download_done_outlined),
-            backgroundColor: const Color.fromARGB(255, 25, 39, 235),
-            foregroundColor: Colors.white,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Completeinspection()),
-              );
-            },
-          ),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          // floatingActionButton: FloatingActionButton(
+          //   child: Icon(Icons.download_done_outlined),
+          //   backgroundColor: const Color.fromARGB(255, 25, 39, 235),
+          //   foregroundColor: Colors.white,
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => Completeinspection()),
+          //     );
+          //   },
+          // ),
         ),
       ),
     );
